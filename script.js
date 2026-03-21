@@ -1,28 +1,77 @@
-    let input = document.getElementById("inp");
-let ul = document.getElementById("ul");
+const input = document.getElementById("inp");
+const ul = document.getElementById("ul");
+const themeBtn = document.getElementById("themeToggle");
 
-function addTodo() {
-    let value = input.value.trim();
-    if (value === "") return;
+let todos = JSON.parse(localStorage.getItem("todos")) || [];
 
-    let li = document.createElement("li");
-    li.textContent = value;
+// Toggle Dark Mode
+themeBtn.onclick = () => {
+  document.body.classList.toggle("dark-theme");
+  const isDark = document.body.classList.contains("dark-theme");
+  themeBtn.innerHTML = isDark ? "☀️" : "🌙";
+};
 
+function renderTodos() {
+  ul.innerHTML = "";
+  todos.forEach((todo, index) => {
+    const li = document.createElement("li");
+    
+    const span = document.createElement("span");
+    span.textContent = todo;
 
-    let delBtn = document.createElement("button");
-    delBtn.textContent = "x";
-    delBtn.onclick = function() {
-        ul.removeChild(li);
+    const btnGroup = document.createElement("div");
+    btnGroup.className = "btn-group";
+
+    const editBtn = document.createElement("button");
+    editBtn.innerHTML = "🖉";
+    editBtn.onclick = () => startEdit(li, span, index);
+
+    const delBtn = document.createElement("button");
+    delBtn.innerHTML = "🗑️";
+    delBtn.className = "del-btn";
+    delBtn.onclick = () => {
+      todos.splice(index, 1);
+      save();
     };
 
-    li.appendChild(delBtn);
+    btnGroup.append(editBtn, delBtn);
+    li.append(span, btnGroup);
     ul.appendChild(li);
-    input.value = "";
-  
-    after()
-    
+  });
 }
 
-function deleteAll() {
-    ul.innerHTML = "";
+function startEdit(li, span, index) {
+  const editInput = document.createElement("input");
+  editInput.type = "text";
+  editInput.className = "edit-input";
+  editInput.value = todos[index];
+
+  li.replaceChild(editInput, span);
+  editInput.focus();
+
+  const finishEdit = () => {
+    const val = editInput.value.trim();
+    if (val) todos[index] = val;
+    save();
+  };
+
+  editInput.onkeydown = (e) => { if (e.key === "Enter") finishEdit(); };
+  editInput.onblur = finishEdit;
 }
+
+function addTodo() {
+  const val = input.value.trim();
+  if (!val) return;
+  todos.push(val);
+  input.value = "";
+  save();
+}
+
+function save() {
+  localStorage.setItem("todos", JSON.stringify(todos));
+  renderTodos();
+}
+
+input.onkeydown = (e) => { if (e.key === "Enter") addTodo(); };
+
+renderTodos();

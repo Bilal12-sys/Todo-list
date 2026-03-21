@@ -1,27 +1,28 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Glassmorphic To-Do List</title>
-    <link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>TaskCraft - Glassmorphic To-Do</title>
+  <link rel="stylesheet" href="style.css">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
 </head>
 <body>
-    
-    <div class="continer">
-        
-     <div class="input-row">
-    <input type="text" id="inp" placeholder="Enter your task">
-    <button onclick="addTodo()">Add</button>
-    <button onclick="deleteAll()" class="da">Delete All</button>
-</div>
 
-<div class="todo">
-    <ul id="ul"></ul>
-</div>
-
+  <div class="container">
+    <div class="name">
+      <h3>TaskCraft</h3> 
+      <button id="themeToggle" title="Toggle Dark Mode">🌓</button>
     </div>
 
-    <script src="script.js"></script>
+    <div class="input-row">
+      <input type="text" id="inp" placeholder="Add a new task..." maxlength="50">
+      <button onclick="addTodo()">+</button>
+    </div>
+
+    <ul id="ul"></ul>
+  </div>
+
+  <script src="script.js"></script>
 </body>
 </html>
