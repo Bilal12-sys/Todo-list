@@ -1,3 +1,4 @@
+/* ================= VARIABLES & RESET ================= */
 :root {
   --primary: #3483f9;
   --primary-dark: #1d5ec0;
@@ -6,13 +7,13 @@
   --card-bg: #ffffff;
   --text-main: #2d3436;
   --shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
-  --transition: all 0.3s ease;
+  --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 /* Dark Mode Variables */
 body.dark-theme {
   --bg-gradient: linear-gradient(135deg, #1e272e 0%, #0fbcf9 100%);
-  --container-bg: rgba(26, 27, 27, 0.627);
+  --container-bg: rgba(26, 27, 27, 0.85);
   --card-bg: #3d4446;
   --text-main: #f5f5f5;
   --shadow: 0 10px 40px rgba(0, 0, 0, 0.4);
@@ -31,10 +32,12 @@ body {
   justify-content: center;
   align-items: center;
   background: var(--bg-gradient);
+  background-attachment: fixed; /* Fixes gradient stretching */
   transition: var(--transition);
   padding: 20px;
 }
 
+/* ================= CONTAINER ================= */
 .container {
   background: var(--container-bg);
   width: 100%;
@@ -43,6 +46,7 @@ body {
   border-radius: 30px;
   box-shadow: var(--shadow);
   backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px); /* Safari support */
   border: 1px solid rgba(255, 255, 255, 0.3);
   animation: fadeIn 0.6s ease;
 }
@@ -56,32 +60,32 @@ body {
 
 .name h3 {
   color: var(--primary-dark);
-  font-size: 1.6rem;
+  font-size: clamp(1.2rem, 5vw, 1.6rem); /* Responsive font sizing */
   font-weight: 700;
-  text-shadow: 0 4px 10px rgba(0, 0, 0, 0.245);
+  text-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
 }
 
+/* ================= CONTROLS ================= */
 #themeToggle {
   background: transparent;
   border: 1.5px solid var(--primary-dark);
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.245);
   color: var(--primary-dark);
   width: 40px;
   height: 40px;
   border-radius: 50%;
   cursor: pointer;
   transition: var(--transition);
-  font-size: 18px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 #themeToggle:hover {
   background: var(--primary-dark);
   color: white;
-  transform: rotate(20deg);
-  transform: scale(1.1)
+  transform: rotate(20deg) scale(1.1);
 }
 
-/* Input Styles */
 .input-row {
   display: flex;
   gap: 10px;
@@ -97,11 +101,12 @@ body {
   color: var(--text-main);
   outline: none;
   transition: var(--transition);
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.03);
+  min-width: 0; /* Prevents flex-item overflow */
 }
 
 .input-row input:focus {
   border-color: var(--primary);
+  box-shadow: 0 0 0 4px rgba(52, 131, 249, 0.1);
 }
 
 .input-row button {
@@ -110,306 +115,257 @@ body {
   border: none;
   width: 48px;
   height: 48px;
+  flex-shrink: 0; /* Prevents button from squishing */
   border-radius: 15px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.245);
   cursor: pointer;
   font-size: 24px;
   transition: var(--transition);
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .input-row button:hover {
-  background-color: white;
-  color: var(--primary);
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.245);
+  filter: brightness(1.1);
+  transform: translateY(-2px);
 }
 
-/* List Items */
+/* ================= LIST ITEMS ================= */
 ul {
   list-style: none;
-  max-height: 350px;
+  max-height: 400px;
   overflow-y: auto;
   padding-right: 5px;
 }
 
-/* Scrollbar */
-ul::-webkit-scrollbar {
-  width: 5px;
-}
-
-ul::-webkit-scrollbar-thumb {
-  background: var(--primary);
-  border-radius: 10px;
-}
-
+/* Custom Scrollbar */
+ul::-webkit-scrollbar { width: 6px; }
+ul::-webkit-scrollbar-track { background: transparent; }
+ul::-webkit-scrollbar-thumb { background: var(--primary); border-radius: 10px; }
+/* ================= LIST ITEMS (Revised) ================= */
 li {
   background: var(--card-bg);
   padding: 12px 15px;
   border-radius: 15px;
-  margin-bottom: 10px;
+  margin-bottom: 12px;
   display: flex;
   align-items: center;
-  justify-content: space-between;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+  /* Use gap to separate span/input from btn-group */
+  gap: 15px; 
+  box-shadow: 0 4px 6px rgba(0,0,0,0.05);
   animation: slideIn 0.3s ease forwards;
-  transition: transform 0.2s ease;
+  transition: var(--transition);
+  
+  /* IMPORTANT: Keeps height consistent when input appears */
+  min-height: 62px; 
 }
 
+/* Reducer scale (as fixed previously) */
 li:hover {
-  transform: scale(1.2);
+  transform: scale(1.02);
+  box-shadow: 0 6px 15px rgba(0,0,0,0.1);
+}
 
+/* Ensure both span and input occupy the same space */
+li span, 
+.edit-input {
+  flex: 1;
+  font-size: 14px;
+  font-weight: 500;
+  min-width: 0; /* Critical for flex behavior */
 }
 
 li span {
-  flex: 1;
   color: var(--text-main);
-  font-size: 14px;
-  font-weight: 500;
+  word-break: break-word;
   cursor: pointer;
+  /* Ensure consistent vertical padding with the input */
+  padding: 6px 0; 
 }
 
-/* Edit Input injected by JS */
+/* ================= THE FIXED EDIT INPUT STYLE ================= */
 .edit-input {
-  flex: 1;
-  border: 1px solid var(--primary);
-  border-radius: 20px;
-  padding: 5px 10px;
-
-  outline: none;
-  background: var(--card-bg);
+  /* Matching text styles from span */
   color: var(--text-main);
+  background: rgba(var(--primary-rgb, 52, 131, 249), 0.05); /* Very light shade of primary */
+  
+  /* Border and Radius */
+  border: 2px solid var(--primary);
+  border-radius: 10px;
+  
+  /* Padding makes it distinct but keeps alignment */
+  padding: 6px 12px; 
+  
+  outline: none;
+  transition: var(--transition);
+  width: 100%; /* Fill available flex space */
 }
 
+.edit-input:focus {
+  background: var(--card-bg);
+  box-shadow: 0 0 0 3px rgba(52, 131, 249, 0.2);
+}
+/* ================= BUTTON GROUPING ================= */
 .btn-group {
   display: flex;
-  gap: 5px;
+  gap: 8px;
+  flex-shrink: 0; /* Prevents buttons from squishing on small screens */
+  margin-left: auto; /* Pushes buttons to the far right */
 }
 
+/* ================= INDIVIDUAL LIST BUTTONS ================= */
 li button {
   border: none;
-  background: rgba(52, 131, 249, 0.1);
+  background: rgba(52, 131, 249, 0.1); /* Subtle blue tint */
   color: var(--primary);
-  padding: 8px;
+  width: 36px;
+  height: 36px;
   border-radius: 10px;
   cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   transition: var(--transition);
+  font-size: 16px;
 }
 
+/* Hover State for Edit/General buttons */
 li button:hover {
   background: var(--primary);
   color: white;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(52, 131, 249, 0.3);
+}
+
+/* Specific Style for Delete Button */
+li button.del-btn {
+  color: #ff4757;
+  background: rgba(255, 71, 87, 0.1);
 }
 
 li button.del-btn:hover {
   background: #ff4757;
+  color: white;
+  box-shadow: 0 4px 8px rgba(255, 71, 87, 0.3);
 }
 
-@keyframes fadeIn {
-  from {
-    opacity: 0;
-    transform: translateY(10px);
-  }
+/* Specific Style for Save Button (Usually shown during Edit) */
+li button.save-btn {
+  color: #2ed573;
+  background: rgba(46, 213, 115, 0.1);
+}
 
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
+li button.save-btn:hover {
+  background: #2ed573;
+  color: white;
+  box-shadow: 0 4px 8px rgba(46, 213, 115, 0.3);
+}
+
+/* ================= ICON ADJUSTMENT ================= */
+/* If you are using FontAwesome or Material Icons */
+li button i {
+  pointer-events: none; /* Ensures the click registers on the button, not the icon */
+}
+
+
+/* ================= ANIMATIONS ================= */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(15px); }
+  to { opacity: 1; transform: translateY(0); }
 }
 
 @keyframes slideIn {
-  from {
-    opacity: 0;
-    transform: translateX(-10px);
-  }
-
-  to {
-    opacity: 1;
-    transform: translateX(0);
-  }
+  from { opacity: 0; transform: translateX(-15px); }
+  to { opacity: 1; transform: translateX(0); }
 }
 
-/* ================= FULL RESPONSIVE ================= */
+/* ================= RESPONSIVE BREAKPOINTS ================= */
 
-/* Tablets */
+/* Small Tablets / Large Phones */
 @media (max-width: 768px) {
-  body {
-    padding: 15px;
-    align-items: center;
-    justify-content: center;
-  }
-
   .container {
     max-width: 90%;
-    padding: 25px;
-    border-radius: 25px;
-    margin: auto;
-  }
-
-  .name h3 {
-    font-size: 1.4rem;
-  }
-
-  #themeToggle {
-    width: 36px;
-    height: 36px;
-    font-size: 16px;
-  }
-
-  .input-row input {
-    padding: 10px 14px;
-    font-size: 14px;
-  }
-
-  .input-row button {
-    width: 44px;
-    height: 44px;
-    font-size: 20px;
-  }
-
-  ul {
-    max-height: 300px;
-  }
-
-  li {
-    padding: 10px 12px;
-  }
-
-  li span {
-    font-size: 13px;
-  }
-
-  li:hover {
-    transform: scale(1.05);
+    padding: 20px;
   }
 }
-
 
 /* Mobile Devices */
 @media (max-width: 480px) {
   body {
     padding: 10px;
-    display: flex;
     align-items: center;
-    /* keeps center */
-    justify-content: center;
-    min-height: 100vh;
+    padding-top: 40px;
   }
 
   .container {
-    width: 100%;
-    max-width: 100%;
-    padding: 20px;
     border-radius: 20px;
-    margin: auto;
-  }
-
-  .name {
-    margin-bottom: 15px;
-  }
-
-  .name h3 {
-    font-size: 1.2rem;
-  }
-
-  #themeToggle {
-    width: 34px;
-    height: 34px;
-    font-size: 14px;
+    padding: 15px;
   }
 
   .input-row {
-    gap: 8px;
+    gap: 5px;
   }
 
   .input-row input {
-    font-size: 13px;
     padding: 10px;
+    font-size: 14px;
   }
 
-  .input-row button {
-    width: 40px;
-    height: 40px;
-    font-size: 18px;
+  .btn-group {
+    gap: 4px;
   }
-
-  ul {
-    max-height: 250px;
-  }
-
-  li {
-    padding: 10px;
-    border-radius: 12px;
-  }
-
-  li span {
-    font-size: 12px;
-  }
-
-  li:hover {
-    transform: scale(1.03);
-    /* smooth for mobile */
-  }
-
-  .btn-group button {
+  
+  li button {
     padding: 6px;
   }
 }
 
 
-/* Large Screens (polish) */
-@media (min-width: 1200px) {
-  body {
-    padding: 30px;
-  }
-
+/* ================= ULTRA SMALL DEVICES ================= */
+@media (min-width: 300px) and (max-width: 360px) {
   .container {
-    max-width: 500px;
-    padding: 35px;
-  }
-
-  .name h3 {
-    font-size: 1.8rem;
-  }
-
-  li span {
-    font-size: 15px;
-  }
-}
-
- @media (max-width: 360px) {
-  body {
-    align-items: flex-start;
-    padding-top: 20px;
-  }
-
-  .container {
+    border-radius: 20px;
     padding: 15px;
-    border-radius: 18px;
+    width: 100%;
+    max-width: 100%;
   }
 
   .name h3 {
-    font-size: 1rem;
+    font-size: 1.1rem; /* Shrink title slightly */
+  }
+
+  .input-row {
+    gap: 5px; /* Tighten gap */
   }
 
   .input-row input {
-    font-size: 12px;
-    padding: 8px;
+    padding: 8px 10px;
+    font-size: 12px; /* Smaller text to prevent overflow */
   }
 
   .input-row button {
-    width: 36px;
-    height: 36px;
-    font-size: 16px;
+    width: 38px;
+    height: 38px;
+    font-size: 18px;
   }
 
-  ul {
-    max-height: 200px;
+  li {
+    padding: 8px 10px;
+    gap: 5px; /* Minimize spacing between text and buttons */
   }
 
-  li span {
-    font-size: 11px;
+  li span, .edit-input {
+    font-size: 12px;
   }
 
-  li:hover {
-    transform: scale(1.02);
+  .btn-group {
+    gap: 3px; /* Tightest possible button grouping */
+  }
+
+  li button {
+    width: 30px;
+    height: 30px;
+    padding: 4px;
+    font-size: 13px;
   }
 }
