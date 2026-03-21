@@ -58,13 +58,13 @@ body {
   color: var(--primary-dark);
   font-size: 1.6rem;
   font-weight: 700;
-   text-shadow: 0 4px 10px rgba(0, 0, 0, 0.245);
+  text-shadow: 0 4px 10px rgba(0, 0, 0, 0.245);
 }
 
 #themeToggle {
-  background:transparent;
+  background: transparent;
   border: 1.5px solid var(--primary-dark);
-   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.245);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.245);
   color: var(--primary-dark);
   width: 40px;
   height: 40px;
@@ -78,7 +78,7 @@ body {
   background: var(--primary-dark);
   color: white;
   transform: rotate(20deg);
-  transform:scale(1.1)
+  transform: scale(1.1)
 }
 
 /* Input Styles */
@@ -97,7 +97,7 @@ body {
   color: var(--text-main);
   outline: none;
   transition: var(--transition);
-  box-shadow: 0 4px 10px rgba(0,0,0,0.03);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.03);
 }
 
 .input-row input:focus {
@@ -116,10 +116,11 @@ body {
   font-size: 24px;
   transition: var(--transition);
 }
-.input-row button:hover{
-    background-color: white;
-    color:  var(--primary);
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.245);
+
+.input-row button:hover {
+  background-color: white;
+  color: var(--primary);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.245);
 }
 
 /* List Items */
@@ -131,8 +132,14 @@ ul {
 }
 
 /* Scrollbar */
-ul::-webkit-scrollbar { width: 5px; }
-ul::-webkit-scrollbar-thumb { background: var(--primary); border-radius: 10px; }
+ul::-webkit-scrollbar {
+  width: 5px;
+}
+
+ul::-webkit-scrollbar-thumb {
+  background: var(--primary);
+  border-radius: 10px;
+}
 
 li {
   background: var(--card-bg);
@@ -142,14 +149,14 @@ li {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
   animation: slideIn 0.3s ease forwards;
   transition: transform 0.2s ease;
 }
 
 li:hover {
   transform: scale(1.2);
-  
+
 }
 
 li span {
@@ -166,7 +173,7 @@ li span {
   border: 1px solid var(--primary);
   border-radius: 20px;
   padding: 5px 10px;
-  
+
   outline: none;
   background: var(--card-bg);
   color: var(--text-main);
@@ -197,13 +204,27 @@ li button.del-btn:hover {
 }
 
 @keyframes fadeIn {
-  from { opacity: 0; transform: translateY(10px); }
-  to { opacity: 1; transform: translateY(0); }
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 @keyframes slideIn {
-  from { opacity: 0; transform: translateX(-10px); }
-  to { opacity: 1; transform: translateX(0); }
+  from {
+    opacity: 0;
+    transform: translateX(-10px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
 }
 
 /* ================= FULL RESPONSIVE ================= */
@@ -267,7 +288,8 @@ li button.del-btn:hover {
   body {
     padding: 10px;
     display: flex;
-    align-items: center;   /* keeps center */
+    align-items: center;
+    /* keeps center */
     justify-content: center;
     min-height: 100vh;
   }
@@ -323,7 +345,8 @@ li button.del-btn:hover {
   }
 
   li:hover {
-    transform: scale(1.03); /* smooth for mobile */
+    transform: scale(1.03);
+    /* smooth for mobile */
   }
 
   .btn-group button {
@@ -349,5 +372,44 @@ li button.del-btn:hover {
 
   li span {
     font-size: 15px;
+  }
+}
+
+ @media (max-width: 360px) {
+  body {
+    align-items: flex-start;
+    padding-top: 20px;
+  }
+
+  .container {
+    padding: 15px;
+    border-radius: 18px;
+  }
+
+  .name h3 {
+    font-size: 1rem;
+  }
+
+  .input-row input {
+    font-size: 12px;
+    padding: 8px;
+  }
+
+  .input-row button {
+    width: 36px;
+    height: 36px;
+    font-size: 16px;
+  }
+
+  ul {
+    max-height: 200px;
+  }
+
+  li span {
+    font-size: 11px;
+  }
+
+  li:hover {
+    transform: scale(1.02);
   }
 }
