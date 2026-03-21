@@ -205,3 +205,149 @@ li button.del-btn:hover {
   from { opacity: 0; transform: translateX(-10px); }
   to { opacity: 1; transform: translateX(0); }
 }
+
+/* ================= FULL RESPONSIVE ================= */
+
+/* Tablets */
+@media (max-width: 768px) {
+  body {
+    padding: 15px;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .container {
+    max-width: 90%;
+    padding: 25px;
+    border-radius: 25px;
+    margin: auto;
+  }
+
+  .name h3 {
+    font-size: 1.4rem;
+  }
+
+  #themeToggle {
+    width: 36px;
+    height: 36px;
+    font-size: 16px;
+  }
+
+  .input-row input {
+    padding: 10px 14px;
+    font-size: 14px;
+  }
+
+  .input-row button {
+    width: 44px;
+    height: 44px;
+    font-size: 20px;
+  }
+
+  ul {
+    max-height: 300px;
+  }
+
+  li {
+    padding: 10px 12px;
+  }
+
+  li span {
+    font-size: 13px;
+  }
+
+  li:hover {
+    transform: scale(1.05);
+  }
+}
+
+
+/* Mobile Devices */
+@media (max-width: 480px) {
+  body {
+    padding: 10px;
+    display: flex;
+    align-items: center;   /* keeps center */
+    justify-content: center;
+    min-height: 100vh;
+  }
+
+  .container {
+    width: 100%;
+    max-width: 100%;
+    padding: 20px;
+    border-radius: 20px;
+    margin: auto;
+  }
+
+  .name {
+    margin-bottom: 15px;
+  }
+
+  .name h3 {
+    font-size: 1.2rem;
+  }
+
+  #themeToggle {
+    width: 34px;
+    height: 34px;
+    font-size: 14px;
+  }
+
+  .input-row {
+    gap: 8px;
+  }
+
+  .input-row input {
+    font-size: 13px;
+    padding: 10px;
+  }
+
+  .input-row button {
+    width: 40px;
+    height: 40px;
+    font-size: 18px;
+  }
+
+  ul {
+    max-height: 250px;
+  }
+
+  li {
+    padding: 10px;
+    border-radius: 12px;
+  }
+
+  li span {
+    font-size: 12px;
+  }
+
+  li:hover {
+    transform: scale(1.03); /* smooth for mobile */
+  }
+
+  .btn-group button {
+    padding: 6px;
+  }
+}
+
+
+/* Large Screens (polish) */
+@media (min-width: 1200px) {
+  body {
+    padding: 30px;
+  }
+
+  .container {
+    max-width: 500px;
+    padding: 35px;
+  }
+
+  .name h3 {
+    font-size: 1.8rem;
+  }
+
+  li span {
+    font-size: 15px;
+  }
+}
